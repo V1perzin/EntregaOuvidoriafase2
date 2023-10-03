@@ -1,3 +1,3 @@
 OUVIDORIA
 
-Ouvidoria sucesso para o cliente!
+Sucesso para o cliente!
