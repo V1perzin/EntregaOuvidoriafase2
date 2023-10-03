@@ -1,0 +1,39 @@
+''' SISTEMA DE OUVIDORIA - GRUPO:
+PEDRO HENRIQUE ROCHA BEZERRA ALVES
+IGOR ALEXANDRE IBIAPINO
+JOSE LUIZ OLIVEIRA CAVALCANTE TELES
+GUSTHAVO DOS SANTOS SILVA LIMA'''
+
+from metados_ouvidoria import *
+
+opcao = 1
+
+conexaoSQL = abrirBancoDados('127.0.0.1','root','12345','ouvidoriaentrega')
+
+
+while opcao != 5:
+    print('\nOUVIDORIA')
+    print('\nMENU PRINCIPAL:')
+    print(
+        '1) Listagem de manifestações \n2) Cadastrar manifestação \n3) Excluir manifestação \n4) Editar manifestação \n5) Sair')
+
+    opcao = int(input('Digite sua opcão: '))
+
+    if opcao == 1:
+        listarManifestacoes()
+
+    elif opcao == 2:
+        cadastrarManifestacoes()
+
+    elif opcao == 3:
+        excluirManifestacao()
+
+    elif opcao == 4:
+        alterarManifestacao()
+
+    elif opcao != 5:
+        print('\nOpcão inválida!')
+
+print('Obrigado pela sua contribuição! Sua opinião é sempre muito importante!')
+
+encerrarBancoDados(conexaoSQL)
