@@ -77,9 +77,6 @@ def excluirManifestacao():
 
             reclamacaoExcluida = int(input('Digite o código da reclamacao que você deseja excluir: '))
 
-            '''while reclamacaoExcluida not in listaReclamacoes[0]:
-                reclamacaoExcluida = input('\nCódigo não cadastrado, por favor, digite um novo: \n-')'''
-
             sqlExcluirReclamacao = 'delete from manifestacoes where codigo = %s'
             dadosExcluirReclamacao = [reclamacaoExcluida]
             excluirBancoDados(conexaoSQL, sqlExcluirReclamacao, dadosExcluirReclamacao)
@@ -97,9 +94,6 @@ def excluirManifestacao():
 
             elogioExcluido = int(input('Digite o código do elogio que você deseja excluir: '))
 
-            '''while elogioExcluido not in range(1, (len(listaTodos)+1)):
-                elogioExcluido = input('\nCódigo não cadastrado, por favor, digite um novo: \n-')'''
-
             sqlExcluirElogio = 'delete from manifestacoes where codigo = %s'
             dadosExcluirElogio = [elogioExcluido]
             excluirBancoDados(conexaoSQL, sqlExcluirElogio, dadosExcluirElogio)
@@ -116,9 +110,6 @@ def excluirManifestacao():
                 print(str(listaOutrosFeedbacks[i][0]) + '-', listaOutrosFeedbacks[i][2])
 
             outroFeedbackExcluido = int(input('Digite o código do feedback que você deseja excluir: '))
-
-            '''while outroFeedbackExcluido not in range(1, (len(listaTodos)+1)):
-                outroFeedbackExcluido = input('\nCódigo não cadastrado, por favor, digite um novo: \n-')'''
 
             sqlExcluirOutroFeedback = 'delete from manifestacoes where codigo = %s'
             dadosExcluirOutroFeedback = [outroFeedbackExcluido]
@@ -147,9 +138,6 @@ def alterarManifestacao():
             print(listaOutrosFeedbacks[i][0], '-', listaOutrosFeedbacks[i][2])
 
         manifestacaoASerEditada = int(input('\nQual o código da manifestação que você deseja editar? \n-'))
-
-        '''while manifestacaoASerEditada not in range(1, (len(listaTodos)+1)):
-            manifestacaoASerEditada = int(input('Código inválido, digite um novo código: \n-'))'''
 
         tipoDeEdição = int(input('\nO quê você deseja alterar? \n1) O tipo \n2) A manifestação \n-'))
 
