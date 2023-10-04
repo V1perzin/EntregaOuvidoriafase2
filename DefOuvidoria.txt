@@ -14,7 +14,7 @@ def listarManifestacoes():
         if len(listaReclamacoes) > 0:
             print('\nListagem de reclamações:')
             for i in range(len(listaReclamacoes)):
-                print(str(i + 1) + '-', listaReclamacoes[i][2])
+                print('-', listaReclamacoes[i][2])
         else:
             print('Não existem reclamações cadastradas!')
 
@@ -23,7 +23,7 @@ def listarManifestacoes():
         if len(listaElogios) > 0:
             print('\nListagem de elogios:')
             for i in range(len(listaElogios)):
-                print(str(i + 1) + '-', listaElogios[i][2])
+                print('-', listaElogios[i][2])
         else:
             print('Não existem elogios cadastrados!')
 
@@ -32,7 +32,7 @@ def listarManifestacoes():
         if len(listaOutrosFeedbacks) > 0:
             print('\nListagem de outros feedbacks:')
             for i in range(len(listaOutrosFeedbacks)):
-                print(str(i + 1) + '-', listaOutrosFeedbacks[i][2])
+                print('-', listaOutrosFeedbacks[i][2])
         else:
             print('Não existem outros feedbacks cadastrados!')
 
