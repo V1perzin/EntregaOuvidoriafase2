@@ -6,7 +6,7 @@ JOSE LUIZ OLIVEIRA CAVALCANTE TELES
 
 from operacoesbd import *
 
-from metados_ouvidoria import *
+from metodos_ouvidoria import *
 
 opcao = 1
 
