@@ -141,6 +141,9 @@ def alterarManifestacao():
 
         tipoDeEdição = int(input('\nO quê você deseja alterar? \n1) O tipo \n2) A manifestação \n-'))
 
+        while tipoDeEdição not in range(1,3):
+            tipoDeEdição = int(input('Código inválido, digite um novo: \n-'))
+
         if tipoDeEdição == 1:
             tipoEditado = int(input(
                 '\nQual o novo tipo que você deseja classificar esta manifestação? \n1) Reclamação \n2) Elogio \n3) Outro feedback \n-'))
@@ -158,4 +161,5 @@ def alterarManifestacao():
 
             atualizarBancoDados(conexaoSQL, sqlEditarManifestacao, dadosEditarManifestacao)
             print('Manifestacao editada com sucesso!')
-
+    else:
+        print('Não existem manifestações cadastradas!')
