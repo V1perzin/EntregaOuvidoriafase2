@@ -1,0 +1,173 @@
+from operacoesbd import *
+
+conexaoSQL = abrirBancoDados('127.0.0.1','root','12345','ouvidoriaentrega')
+
+
+
+
+def listarManifestacoes():
+    tipoDeManifestacao = int(input(
+        '\nQual tipo de manifestação você deseja listar? \n1)Reclamações \n2)Elogios \n3)Outros feedbacks \n4)Todas \n-'))
+    while tipoDeManifestacao not in range(1, 5):
+        tipoDeManifestacao = int(input('Código inválido, por favor, digite novamente: \n-'))
+
+    if tipoDeManifestacao == 1:
+        listaReclamacoes = listarBancoDados(conexaoSQL, 'select * from manifestacoes where tipo = 1')
+        if len(listaReclamacoes) > 0:
+            print('\nListagem de reclamações:')
+            for i in range(len(listaReclamacoes)):
+                print('-', listaReclamacoes[i][2])
+        else:
+            print('Não existem reclamações cadastradas!')
+
+    elif tipoDeManifestacao == 2:
+        listaElogios = listarBancoDados(conexaoSQL, 'select * from manifestacoes where tipo = 2')
+        if len(listaElogios) > 0:
+            print('\nListagem de elogios:')
+            for i in range(len(listaElogios)):
+                print('-', listaElogios[i][2])
+        else:
+            print('Não existem elogios cadastrados!')
+
+    elif tipoDeManifestacao == 3:
+        listaOutrosFeedbacks = listarBancoDados(conexaoSQL, 'select * from manifestacoes where tipo = 3')
+        if len(listaOutrosFeedbacks) > 0:
+            print('\nListagem de outros feedbacks:')
+            for i in range(len(listaOutrosFeedbacks)):
+                print('-', listaOutrosFeedbacks[i][2])
+        else:
+            print('Não existem outros feedbacks cadastrados!')
+
+    elif tipoDeManifestacao == 4:
+        listaTodos = listarBancoDados(conexaoSQL, 'select * from manifestacoes')
+        if len(listaTodos) > 0:
+            print('\nTodas as manifestações:')
+            for i in range(len(listaTodos)):
+                print('-', listaTodos[i][2])
+
+        else:
+            print('Não existem outros feedbacks cadastrados!')
+
+def cadastrarManifestacoes():
+    tipoDeFeedback = int(input(
+        '\nQual tipo de manifestação você deseja nos fazer? \n1)Reclamações \n2)Elogios \n3)Outros feedbacks \n -'))
+
+    while tipoDeFeedback not in range(1, 4):
+        tipoDeFeedback = int(input('Código inválido, por favor, digite novamente: \n-'))
+
+    cadastroDeFeedback = input('O que você tem para nos dizer?\n - ')
+    sqlInserirFeedback = 'insert into manifestacoes(tipo,manifestacao) values (%s,%s)'
+    dadosFeedback = [tipoDeFeedback, cadastroDeFeedback]
+    insertNoBancoDados(conexaoSQL, sqlInserirFeedback, dadosFeedback)
+    print('Manifestação cadastrada com sucesso! Obrigado por deixar a sua opinião!')
+
+
+def excluirManifestacao():
+    tipoDeManifestacaoExcluida = int(input(
+        '\nQual tipo de manifestação você deseja excluir? \n1)Reclamações \n2)Elogios \n3)Outros feedbacks \n -'))
+    while tipoDeManifestacaoExcluida not in range(1, 4):
+        tipoDeManifestacaoExcluida = int(input('Código inválido, por favor, digite novamente: \n-'))
+
+    if tipoDeManifestacaoExcluida == 1:
+        listaReclamacoes = listarBancoDados(conexaoSQL, 'select * from manifestacoes where tipo = 1')
+        if len(listaReclamacoes) > 0:
+            print('Listagem de reclamações:')
+            for i in range(len(listaReclamacoes)):
+                print(str(listaReclamacoes[i][0]) + '-', listaReclamacoes[i][2])
+
+            reclamacaoExcluida = int(input('Digite o código da reclamacao que você deseja excluir: '))
+
+            '''while reclamacaoExcluida not in listaReclamacoes[0]:
+                reclamacaoExcluida = input('\nCódigo não cadastrado, por favor, digite um novo: \n-')'''
+
+            sqlExcluirReclamacao = 'delete from manifestacoes where codigo = %s'
+            dadosExcluirReclamacao = [reclamacaoExcluida]
+            excluirBancoDados(conexaoSQL, sqlExcluirReclamacao, dadosExcluirReclamacao)
+            print('Reclamacao excluída com sucesso!')
+
+        else:
+            print('Não há reclamações cadastradas!')
+
+    elif tipoDeManifestacaoExcluida == 2:
+        listaElogios = listarBancoDados(conexaoSQL, 'select * from manifestacoes where tipo = 2')
+        if len(listaElogios) > 0:
+            print('Listagem de elogios:')
+            for i in range(len(listaElogios)):
+                print(str(listaElogios[i][0]) + '-', listaElogios[i][2])
+
+            elogioExcluido = int(input('Digite o código do elogio que você deseja excluir: '))
+
+            '''while elogioExcluido not in range(1, (len(listaTodos)+1)):
+                elogioExcluido = input('\nCódigo não cadastrado, por favor, digite um novo: \n-')'''
+
+            sqlExcluirElogio = 'delete from manifestacoes where codigo = %s'
+            dadosExcluirElogio = [elogioExcluido]
+            excluirBancoDados(conexaoSQL, sqlExcluirElogio, dadosExcluirElogio)
+            print('Elogio excluído com sucesso!')
+
+        else:
+            print('Não há elogios cadastrados!')
+
+    elif tipoDeManifestacaoExcluida == 3:
+        listaOutrosFeedbacks = listarBancoDados(conexaoSQL, 'select * from manifestacoes where tipo = 3')
+        if len(listaOutrosFeedbacks) > 0:
+            print('Listagem de outros feedbacks:')
+            for i in range(len(listaOutrosFeedbacks)):
+                print(str(listaOutrosFeedbacks[i][0]) + '-', listaOutrosFeedbacks[i][2])
+
+            outroFeedbackExcluido = int(input('Digite o código do feedback que você deseja excluir: '))
+
+            '''while outroFeedbackExcluido not in range(1, (len(listaTodos)+1)):
+                outroFeedbackExcluido = input('\nCódigo não cadastrado, por favor, digite um novo: \n-')'''
+
+            sqlExcluirOutroFeedback = 'delete from manifestacoes where codigo = %s'
+            dadosExcluirOutroFeedback = [outroFeedbackExcluido]
+            excluirBancoDados(conexaoSQL, sqlExcluirOutroFeedback, dadosExcluirOutroFeedback)
+            print('Feedback excluído com sucesso!')
+
+        else:
+            print('Não há outros feedbacks cadastrados!')
+
+def alterarManifestacao():
+    listaReclamacoes = listarBancoDados(conexaoSQL, 'select * from manifestacoes where tipo = 1')
+    listaElogios = listarBancoDados(conexaoSQL, 'select * from manifestacoes where tipo = 2')
+    listaOutrosFeedbacks = listarBancoDados(conexaoSQL, 'select * from manifestacoes where tipo = 3')
+    listaTodos = listarBancoDados(conexaoSQL, 'select * from manifestacoes')
+    if len(listaTodos) > 0:
+        print('\nLista de reclamações:')
+        for i in range(len(listaReclamacoes)):
+            print(listaReclamacoes[i][0], '-', listaReclamacoes[i][2])
+
+        print('\nLista de elogios:')
+        for i in range(len(listaElogios)):
+            print(listaElogios[i][0], '-', listaElogios[i][2])
+
+        print('\nLista de outros feedbacks:')
+        for i in range(len(listaOutrosFeedbacks)):
+            print(listaOutrosFeedbacks[i][0], '-', listaOutrosFeedbacks[i][2])
+
+        manifestacaoASerEditada = int(input('\nQual o código da manifestação que você deseja editar? \n-'))
+
+        '''while manifestacaoASerEditada not in range(1, (len(listaTodos)+1)):
+            manifestacaoASerEditada = int(input('Código inválido, digite um novo código: \n-'))'''
+
+        tipoDeEdição = int(input('\nO quê você deseja alterar? \n1) O tipo \n2) A manifestação \n-'))
+
+        if tipoDeEdição == 1:
+            tipoEditado = int(input(
+                '\nQual o novo tipo que você deseja classificar esta manifestação? \n1) Reclamação \n2) Elogio \n3) Outro feedback \n-'))
+            sqlEditarTipo = 'update manifestacoes set tipo = %s where codigo = %s'
+            dadosEditarTipo = [tipoEditado, manifestacaoASerEditada]
+
+            atualizarBancoDados(conexaoSQL, sqlEditarTipo, dadosEditarTipo)
+            print('Tipo editado com sucesso!')
+
+        if tipoDeEdição == 2:
+            manifestacaoEditada = input(
+                'Qual a manifestação alterada você deseja cadastrar? \n-')
+            sqlEditarManifestacao = 'update manifestacoes set manifestacao = %s where codigo = %s'
+            dadosEditarManifestacao = [manifestacaoEditada, manifestacaoASerEditada]
+
+            atualizarBancoDados(conexaoSQL, sqlEditarManifestacao, dadosEditarManifestacao)
+            print('Manifestacao editada com sucesso!')
+
